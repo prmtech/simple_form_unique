@@ -1,0 +1,4 @@
+Simple Form Unique
+
+Adds searches the given model for any existing objects that already have the
+value in the field passed in
