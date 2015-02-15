@@ -7,9 +7,15 @@ Gem::Specification.new do |s|
   s.version     = SimpleFormUnique::VERSION
   s.authors     = ["Peter Ragone"]
   s.email       = ["peter@prmtech.com"]
+  s.license     = 'MIT'
   s.homepage    = "http://github.com/pcragone/simple_form_unique"
   s.summary     = "Adds unique inputs to the simple_form library"
-  s.description = "Adds unique inputs to the simple_form library"
+  s.description = <<-eos
+Sets a form to invalid if a value entered into the specified input is not unique
+among all instances of that model; UI can display this as various formats, with 
+the default being a green 'Available' and a red 'Unavailable'
+eos
+
 
   s.rubyforge_project = "simple_form_unique"
 
@@ -20,8 +26,7 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  s.add_runtime_dependency "rails", ">= 3.1"
-  s.add_runtime_dependency "simple_form", ">= 1.5.1"
-  s.add_runtime_dependency "jquery-rails", ">= 1.0.14"
-  
+  s.add_runtime_dependency "rails", "~> 4.2"
+  s.add_runtime_dependency "simple_form", "~> 3.1"
+  # s.add_runtime_dependency "jquery-rails", ">= 1.0.14"
 end
