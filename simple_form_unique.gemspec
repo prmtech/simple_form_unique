@@ -26,7 +26,7 @@ eos
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  s.add_runtime_dependency "rails", "~> 4.2"
+  s.add_runtime_dependency "rails", "~> 4.1"
   s.add_runtime_dependency "simple_form", "~> 3.1"
   # s.add_runtime_dependency "jquery-rails", ">= 1.0.14"
 end
