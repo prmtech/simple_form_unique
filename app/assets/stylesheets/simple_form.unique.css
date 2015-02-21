@@ -1,0 +1,16 @@
+.simple_form_unique ~ span.message {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding-bottom: 7px;
+  padding-right: 15px;
+  font-weight: bold;
+}
+
+.simple_form_unique ~ span.message.available {
+  color: #3c763d;
+}
+
+.simple_form_unique ~ span.message.unavailable {
+  color: #a94442;
+}
