@@ -11,7 +11,7 @@ class UniqueInput < SimpleForm::Inputs::TextInput
   private
 
   def input_field_options
-    result = {}
+    result = input_html_options || {}
     result[:class] = "#{input_html_options_class} #{wrapper_class} simple_form_unique"
     result[:placeholder] = placeholder_text
     result[:'data-message-field'] = "##{message_element_id}"
