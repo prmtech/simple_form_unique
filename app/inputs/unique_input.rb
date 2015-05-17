@@ -1,7 +1,5 @@
 class UniqueInput < SimpleForm::Inputs::TextInput
   def input wrapper_options
-    # SimpleFormUnique::SearchController.klass = object.class
-    # SimpleFormUnique::SearchController.attribute = attribute_name
     @wrapper_options = wrapper_options
     out = ActiveSupport::SafeBuffer.new
     out << @builder.text_field(attribute_name, input_field_options)

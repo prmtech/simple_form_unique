@@ -135,11 +135,9 @@
     },
 
     onKeyPress: function(e) {
-      console.log('onKeyPress');
     },
 
     onKeyUp: function(e) {
-      console.log('onKeyUp');
       var that = this;
 
       if (that.disabled) {
@@ -148,8 +146,6 @@
 
       clearInterval(that.onChangeInterval);
 
-      console.log('onKeyUP: that.currentValue: ' + that.currentValue);
-      console.log('onKeyUP: that.el.val(): ' + that.el.val());
       if (that.currentValue !== that.el.val()) {
         if (that.options.deferRequestBy > 0) {
           // Defer lookup in case when value changes very quickly:
@@ -163,7 +159,6 @@
     },
 
     onValueChange: function () {
-      console.log('onValueChange');
       var that = this,
         options = that.options,
         value = that.el.val(),
@@ -196,8 +191,6 @@
     },
 
     validateUniqueness: function(q) {
-      console.log('validateUniqueness');
-      console.log(this.options);
       var response,
         that = this,
         options = that.options,
@@ -205,7 +198,6 @@
         params,
         cacheKey,
         ajaxSettings;
-      console.log('a');
       options.params[options.paramName] = q;
       params = options.ignoreParams ? null : options.params;
 
@@ -214,7 +206,6 @@
       if (that.currentRequest) {
         that.currentRequest.abort();
       }
-      console.log('b');
 
       ajaxSettings = {
         url: serviceUrl,
@@ -222,13 +213,11 @@
         type: options.type,
         dataType: options.dataType
       };
-      console.log('c');
 
       $.extend(ajaxSettings, options.ajaxSettings);
+      that.setLoadingMessage();
 
       that.currentRequest = $.ajax(ajaxSettings).done(function (data) {
-        console.log('d');
-        that.setLoadingMessage();
         var result;
         that.currentRequest = null;
         result = options.transformResult(data);
@@ -242,7 +231,6 @@
         //that.processResponse(result, q, cacheKey);
         //options.onSearchComplete.call(that.element, q, result.suggestions);
       }).fail(function (jqXHR, textStatus, errorThrown) {
-        console.log('e');
         options.onSearchError.call(that.element, q, jqXHR, textStatus, errorThrown);
       });
     },
@@ -307,36 +295,28 @@
 
   // Create chainable jQuery plugin:
   $.fn.unique_input = function (options, args) {
-    console.log('a');
     var dataKey = 'unique';
     // If function invoked without argument return
     // instance of the first matched element:
     if (arguments.length === 0) {
-      console.log('b');
       return this.first().data(dataKey);
     }
 
     return this.each(function () {
-      console.log('c');
       var inputElement = $(this),
         instance = inputElement.data(dataKey);
 
       if (typeof options === 'string') {
-        console.log('d');
         if (instance && typeof instance[options] === 'function') {
-          console.log('e');
           instance[options](args);
         }
       } else {
         // If instance already exists, destroy it:
-        console.log('f');
         if (instance && instance.dispose) {
-          console.log('g');
           instance.dispose();
         }
         instance = new UniqueInput(this, options);
         inputElement.data(dataKey, instance);
-        console.log('h');
       }
     });
   };
