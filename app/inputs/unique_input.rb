@@ -2,8 +2,10 @@ class UniqueInput < SimpleForm::Inputs::TextInput
   def input wrapper_options
     @wrapper_options = wrapper_options
     out = ActiveSupport::SafeBuffer.new
-    out << @builder.text_field(attribute_name, input_field_options)
-    out << content_tag(:span, '', id: message_element_id, class: 'message')
+    content = content_tag(:div, @builder.text_field(attribute_name, input_field_options).concat(content_tag(:span, '', id: message_element_id, class: 'message')))
+    # content << content_tag(:span, '', id: message_element_id, class: 'message')
+    out << content
+    out
   end
 
   private
@@ -13,7 +15,8 @@ class UniqueInput < SimpleForm::Inputs::TextInput
     result[:class] = "#{input_html_options_class} #{wrapper_class} simple_form_unique"
     result[:placeholder] = placeholder_text
     result[:'data-message-field'] = "##{message_element_id}"
-    result[:'data-source'] = input_html_options[:source]
+    result[:'data-source'] = options.delete :source
+    result[:'data-param-name'] = options.delete :param_name
     result[:'data-original-value'] = object.try(attribute_name)
     result
   end

@@ -37,6 +37,15 @@
           div.style.position = 'absolute';
           div.style.display = 'none';
           return div;
+        },
+        getFunctionByName: function (functionName, context /*, args */) {
+          var args = Array.prototype.slice.call(arguments, 2);
+          var namespaces = functionName.split(".");
+          var func = namespaces.pop();
+          for (var i = 0; i < namespaces.length; i++) {
+            context = context[namespaces[i]];
+          }
+          return context[func];
         }
       };
     }()),
@@ -72,10 +81,11 @@
         lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
           return suggestion.value.toLowerCase().indexOf(queryLowerCase) !== -1;
         },
-        paramName: 'query',
+        paramName: $(el).data('param-name') || 'query',
         transformResult: function (response) {
           return typeof response === 'string' ? $.parseJSON(response) : response;
-        }
+        },
+        onSearchError: getFunctionByName($(el).data('on-search-error') || 'console.log', window)
       };
 
     // Shared variables:
@@ -262,8 +272,9 @@
 
     setLoadingMessage: function () {
       var that = this;
-      that.el.parent().removeClass('has-success');
-      that.el.parent().removeClass('has-error');
+      that.el.parent().parent().removeClass('has-success');
+      that.el.parent().parent().removeClass('has-error');
+      that.el.parent().siblings('.help-block').remove()
       that.messageEl.removeClass('available');
       that.messageEl.removeClass('unavailable');
       that.messageEl.html('Loading...');
@@ -271,22 +282,22 @@
 
     showAvailableMessage: function () {
       var that = this;
-      that.el.parent().removeClass('has-success');
-      that.el.parent().removeClass('has-error');
+      that.el.parent().parent().removeClass('has-success');
+      that.el.parent().parent().removeClass('has-error');
       that.messageEl.removeClass('available');
       that.messageEl.removeClass('unavailable');
-      that.el.parent().addClass('has-success');
+      that.el.parent().parent().addClass('has-success');
       that.messageEl.html('Available');
       that.messageEl.addClass('available');
     },
 
     showUnavailableMessage: function () {
       var that = this;
-      that.el.parent().removeClass('has-success');
-      that.el.parent().removeClass('has-error');
+      that.el.parent().parent().removeClass('has-success');
+      that.el.parent().parent().removeClass('has-error');
       that.messageEl.removeClass('available');
       that.messageEl.removeClass('unavailable');
-      that.el.parent().addClass('has-error');
+      that.el.parent().parent().addClass('has-error');
       that.messageEl.html('Unavailable');
       that.messageEl.addClass('unavailable');
     }
