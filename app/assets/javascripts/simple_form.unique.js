@@ -85,7 +85,7 @@
         transformResult: function (response) {
           return typeof response === 'string' ? $.parseJSON(response) : response;
         },
-        onSearchError: getFunctionByName($(el).data('on-search-error') || 'console.log', window)
+        onSearchError: utils.getFunctionByName($(el).data('on-search-error') || 'console.log', window)
       };
 
     // Shared variables:
