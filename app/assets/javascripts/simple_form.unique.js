@@ -39,6 +39,11 @@
           return div;
         },
         getFunctionByName: function (functionName, context /*, args */) {
+          var noop = function () {};
+          if (functionName === undefined)
+            return noop;
+          if (context === undefined)
+            return noop;
           var args = Array.prototype.slice.call(arguments, 2);
           var namespaces = functionName.split(".");
           var func = namespaces.pop();
